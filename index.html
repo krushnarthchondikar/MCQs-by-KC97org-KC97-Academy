@@ -15,6 +15,7 @@
       --accent: #2563eb;
       --danger: #dc2626;
       --success: #16a34a;
+      --youtube: #ff0000;
     }
     * { box-sizing: border-box; }
     body {
@@ -53,6 +54,30 @@
       font-size: 0.95rem;
       border-radius: 4px;
     }
+    
+    /* ADVERTISEMENT STYLES */
+    .ad-container {
+      background-color: #f1f5f9;
+      border: 1px dashed #94a3b8;
+      border-radius: 8px;
+      text-align: center;
+      padding: 15px;
+      margin: 20px 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 120px;
+    }
+    .ad-label {
+      font-size: 0.75rem;
+      color: #64748b;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
     .section-title {
       font-size: 1.1rem;
       font-weight: bold;
@@ -105,7 +130,7 @@
       border: 1px solid #fef3c7;
       padding: 12px 16px;
       border-radius: 8px;
-      margin-bottom: 25px;
+      margin-bottom: 15px;
       display: flex;
       align-items: flex-start;
       gap: 10px;
@@ -233,13 +258,43 @@
       color: var(--primary);
       font-weight: 600;
     }
+    #solution-video-container {
+      display: none; 
+      text-align: center; 
+      margin-top: 25px; 
+      padding-top: 20px; 
+      border-top: 2px dashed #cbd5e1;
+    }
+    .btn-youtube {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--youtube);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      margin-bottom: 15px;
+      transition: 0.2s;
+    }
+    .btn-youtube:hover {
+      background: #cc0000;
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <h1 id="quiz-heading">दैनिक सराव टेस्ट</h1>
+  <h1 id="quiz-heading">महाराष्ट्रातील वृत्तपत्रे - दैनिक सराव टेस्ट</h1>
   <div class="date-badge" id="display-date"></div>
+
+  <!-- AD SECTION 1 (TOP) -->
+  <div class="ad-container">
+    <div class="ad-label">Advertisement</div>
+    <div style="color: #94a3b8;">(Top Ad Space / 728x90 or Responsive)</div>
+  </div>
+  <!-- END AD SECTION 1 -->
 
   <div class="rules-banner">
     <strong>परीक्षेचे नियम व गुणदान पद्धत:</strong><br>
@@ -257,7 +312,7 @@
     <div class="user-info-grid">
       <div class="form-group full-width">
         <label for="u_name">पूर्ण नाव *</label>
-        <input type="text" id="u_name" placeholder="उदा. केसी ९७ केसी ९७ अकादमी" required>
+        <input type="text" id="u_name" placeholder="उदा. राहुल विठ्ठल जाधव" required>
         <span class="error-msg" id="err_name">कृपया वैध नाव प्रविष्ट करा (किमान ३ अक्षरे).</span>
       </div>
       <div class="form-group">
@@ -267,7 +322,7 @@
       </div>
       <div class="form-group">
         <label for="u_email">ईमेल आयडी *</label>
-        <input type="email" id="u_email" placeholder="उदा. kc97academy@example.com" required>
+        <input type="email" id="u_email" placeholder="उदा. student@example.com" required>
         <span class="error-msg" id="err_email">कृपया वैध ईमेल आयडी प्रविष्ट करा.</span>
       </div>
     </div>
@@ -282,6 +337,13 @@
     <span class="error-msg" id="err_consent" style="margin-top: -15px; margin-bottom: 15px; display: none;">
       चाचणी सबमिट करण्यासाठी संमती देणे अनिवार्य आहे.
     </span>
+
+    <!-- AD SECTION 2 (MIDDLE) -->
+    <div class="ad-container">
+      <div class="ad-label">Advertisement</div>
+      <div style="color: #94a3b8;">(Middle Ad Space / Square or Responsive)</div>
+    </div>
+    <!-- END AD SECTION 2 -->
 
     <!-- QUESTIONS -->
     <div class="section-title">आजचे प्रश्न (<span id="total-questions-count">0</span> प्रश्न)</div>
@@ -336,15 +398,32 @@
       <div class="score" id="res-final-score">0.00</div>
       <div id="res-percentage" style="color: #475569; font-weight: 500;"></div>
     </div>
+
+    <!-- YOUTUBE SOLUTION VIDEO SECTION -->
+    <div id="solution-video-container">
+      <h3 style="color: var(--primary); margin-bottom: 10px;">आजच्या प्रश्नांचे स्पष्टीकरण (Video Solution)</h3>
+      <a id="youtube-link" href="#" target="_blank" class="btn-youtube">
+        ▶ YouTube वर स्पष्टीकरण पहा
+      </a>
+      <div id="youtube-embed"></div>
+    </div>
+    
+    <!-- AD SECTION 3 (BOTTOM) -->
+    <div class="ad-container" style="margin-top: 30px;">
+      <div class="ad-label">Advertisement</div>
+      <div style="color: #94a3b8;">(Bottom Ad Space / 728x90 or Responsive)</div>
+    </div>
+    <!-- END AD SECTION 3 -->
+
   </div>
 </div>
 
 <script>
 // ========================================================
-// 1. GOOGLE APPS SCRIPT WEB APP URL
-// Replace with the Web App URL generated from Step 1
+// 1. ADMIN CONFIGURATION
 // ========================================================
-const GOOGLE_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbw7VcWvUFrfBmwqDiJp9_bny-lrBUeUYA8ABTdWACXAgyS3R2Hs4T_GkcROFx0AKlAfxQ/exec";
+const GOOGLE_SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwgpeKVexGqBVc4CSb4F1W144sJ15n_mfB0XX9giEgfQ_xTZ1t-2aIdFU3kl2CXx-3_2A/exec"; 
+const DAILY_YOUTUBE_URL = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"; 
 
 // ========================================================
 // 2. DAILY MANAGEMENT & SINGLE ATTEMPT LOCK
@@ -365,7 +444,7 @@ const dailyQuizBank = [
   { id: 1, q: "महाराष्ट्रातील वृत्तपत्रांचे जनक कोणाला म्हटले जाते?", opt: ["लोकमान्य टिळक", "बाळशास्त्री जांभेकर", "भाऊ महाजन", "गोपाळ गणेश आगरकर"], a: 1 },
   { id: 2, q: "भारतात पहिला छापखाना पोर्तुगीजांनी कोणत्या वर्षी सुरू केला?", opt: ["1780", "1832", "1556", "1857"], a: 2 },
   { id: 3, q: "1780 मध्ये जेम्स हिकी यांनी सुरू केलेले भारतातील पहिले वृत्तपत्र कोणते?", opt: ["दर्पण", "बॉम्बे हेराल्ड", "द मद्रास कुरिअर", "कलकत्ता जनरल अ‍ॅडव्हर्टायझर (बंगाल गॅझेट)"], a: 3 },
-  { id: 4, q: "1799 चा वृत्तपत्रांचा मुद्रण नियंत्रण कायदा (Censorship of Press Act) कोणी आणला?", opt: ["लॉर्ड वेलस्ली", "लॉर्ड लिटन", "लॉर्ड डलहौसी", "चार्ल्स मेटकॉफ"], a: 0 },
+  { id: 4, q: "1799 चा वृत्तपत्रांचा मुद्रण नियंत्रण कायदा कोणी आणला?", opt: ["लॉर्ड वेलस्ली", "लॉर्ड लिटन", "लॉर्ड डलहौसी", "चार्ल्स मेटकॉफ"], a: 0 },
   { id: 5, q: "वर्नाक्युलर प्रेस अ‍ॅक्ट (1878) खालीलपैकी कोणाच्या काळात संमत झाला?", opt: ["लॉर्ड बेंटिक", "लॉर्ड लिटन", "लॉर्ड वेलस्ली", "जॉन अ‍ॅडम्स"], a: 1 },
   { id: 6, q: "महाराष्ट्रातील पहिले मराठी वृत्तपत्र 'दर्पण' कोणत्या वर्षी सुरू झाले?", opt: ["1841", "1881", "1832", "1849"], a: 2 },
   { id: 7, q: "'प्रभाकर' या 1841 मध्ये सुरू झालेल्या साप्ताहिकाचे संपादक कोण होते?", opt: ["भाऊ महाजन (गोविंद कुंटे)", "कृष्णाजी त्र्यंबक रानडे", "म. गो. रानडे", "कृष्णराव भालेकर"], a: 0 },
@@ -381,7 +460,7 @@ const dailyQuizBank = [
   { id: 17, q: "डॉ. बाबासाहेब आंबेडकर यांनी 'जनता' हे वृत्तपत्र कोणत्या वर्षी काढले?", opt: ["1920", "1927", "1930", "1956"], a: 2 },
   { id: 18, q: "डॉ. बाबासाहेब आंबेडकर यांनी 1956 मध्ये सुरू केलेले वृत्तपत्र कोणते?", opt: ["समता", "बहिष्कृत भारत", "मूकनायक", "प्रबुद्ध भारत"], a: 3 },
   { id: 19, q: "संयुक्त महाराष्ट्र चळवळीतील प्रभावी दैनिक 'मराठा' कोणाचे होते?", opt: ["लोकमान्य टिळक", "आचार्य प्र. के. अत्रे", "शिवराम महादेव परांजपे", "भाऊ महाजन"], a: 1 },
-  { id: 20, q: "1823 चा परवाना अधिनियम (Licensing Regulations) कोणाच्या काळात जारी करण्यात आला?", opt: ["जॉन अ‍ॅडम्स", "लॉर्ड वेलस्ली", "लॉर्ड डलहौसी", "लॉर्ड बेंटिक"], a: 0 },
+  { id: 20, q: "1823 चा परवाना अधिनियम कोणाच्या काळात जारी करण्यात आला?", opt: ["जॉन अ‍ॅडम्स", "लॉर्ड वेलस्ली", "लॉर्ड डलहौसी", "लॉर्ड बेंटिक"], a: 0 },
   { id: 21, q: "1823 च्या परवाना अधिनियमामुळे राजा राममोहन रॉय यांचे कोणते वृत्तपत्र बंद पडले?", opt: ["संवाद कौमुदी", "मिरात-उल-अखबार", "बंगाल गॅझेट", "इंडियन मिरर"], a: 1 },
   { id: 22, q: "1835 मध्ये भारतीय वृत्तपत्रांवरील बंधने उठवून 'वृत्तपत्रांचा मुक्तीदाता' कोण ठरले?", opt: ["लॉर्ड बेंटिक", "चार्ल्स मेटकॉफ", "लॉर्ड वेलस्ली", "लॉर्ड लिटन"], a: 1 },
   { id: 23, q: "1857 च्या उठावादरम्यान वृत्तपत्रांवर निर्बंध लादणारा परवाना कायदा कोणाच्या काळात आला?", opt: ["लॉर्ड डलहौसी", "लॉर्ड वेलस्ली", "लॉर्ड लिटन", "जॉन अ‍ॅडम्स"], a: 0 },
@@ -397,7 +476,7 @@ const dailyQuizBank = [
   { id: 33, q: "भाऊ महाजन यांचे पूर्ण नाव काय होते?", opt: ["गोविंद विठ्ठल कुंटे", "कृष्णाजी त्र्यंबक रानडे", "शिवराम महादेव", "गोपाळ गणेश"], a: 0 },
   { id: 34, q: "महात्मा गांधींच्या विचारांशी संबंधित वृत्तपत्रांवर स्पर्धा परीक्षेत कोणत्या प्रकारात प्रश्न विचारले जातात?", opt: ["गांधींची वृत्तपत्रे", "क्रांतिकारी वृत्तपत्रे", "संपादक व वृत्तपत्र जोड्या", "वरील सर्व"], a: 3 },
   { id: 35, q: "पुढीलपैकी कोणते वृत्तपत्र सत्यशोधक चळवळीचे मुखपत्र मानले गेले?", opt: ["ज्ञानप्रकाश", "दीनबंधू", "केसरी", "प्रभाकर"], a: 1 },
-  { id: 36, q: "खालीलपैकी कोणती जोडी अचूक आहे?", opt: ["दर्पण - बाळशास्त्री जांभेकर", "केसरी - गोपाळ गणेश आगरकर (पहिले संपादक)", "सुधारक - गोपाळ गणेश आगरकर", "वरील सर्व जोड्या अचूक आहेत"], a: 3 },
+  { id: 36, q: "खालीलपैकी कोणती जोडी अचूक आहे?", opt: ["दर्पण - बाळशास्त्री जांभेकर", "केसरी - गोपाळ गणेश आगरकर", "सुधारक - गोपाळ गणेश आगरकर", "वरील सर्व जोड्या अचूक आहेत"], a: 3 },
   { id: 37, q: "डॉ. आंबेडकरांच्या वृत्तपत्रांचा पहिला ते शेवटचा असा योग्य कालक्रम निवडा:", opt: ["मूकनायक - बहिष्कृत भारत - जनता - प्रबुद्ध भारत", "जनता - प्रबुद्ध भारत - मूकनायक - बहिष्कृत भारत", "बहिष्कृत भारत - मूकनायक - जनता - प्रबुद्ध भारत", "मूकनायक - जनता - बहिष्कृत भारत - प्रबुद्ध भारत"], a: 0 },
   { id: 38, q: "स्वातंत्र्यपूर्व भारतातील 'काळ' या वृत्तपत्राचे मुख्य स्वरूप काय होते?", opt: ["व्यापारी जाहिराती", "राष्ट्रीय विचारांचे आक्रमक साप्ताहिक", "केवळ कृषी सुधारणा", "धार्मिक पत्रिका"], a: 1 },
   { id: 39, q: "1881 मध्ये केसरी व मराठा या वृत्तपत्रांची सुरुवात कोणी केली?", opt: ["लोकमान्य टिळक व सहकारी", "बाळशास्त्री जांभेकर", "आचार्य अत्रे", "डॉ. आंबेडकर"], a: 0 },
@@ -473,7 +552,6 @@ quizForm.addEventListener("submit", async function(e) {
     return;
   }
 
-  // Consent validation
   if (!consentCheckbox.checked) {
     document.getElementById("err_consent").style.display = "block";
     window.scrollTo({ top: 150, behavior: 'smooth' });
@@ -511,7 +589,6 @@ quizForm.addEventListener("submit", async function(e) {
     return;
   }
 
-  // Calculate Scores
   let correctCount = 0;
   let wrongCount = 0;
   let unattemptedCount = 0;
@@ -534,7 +611,6 @@ quizForm.addEventListener("submit", async function(e) {
   const finalScore = (correctCount * 1.0) - penalty;
   const percentage = ((finalScore / dailyQuizBank.length) * 100).toFixed(2);
 
-  // Prepare payload for Google Sheet
   const payload = {
     timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
     date: todayDateStr,
@@ -551,18 +627,16 @@ quizForm.addEventListener("submit", async function(e) {
     consent: "Yes"
   };
 
-  // Submit to Google Sheet
   const submitBtnEl = document.getElementById("submit-btn");
   const loadingIndicator = document.getElementById("loading-indicator");
   submitBtnEl.disabled = true;
   loadingIndicator.style.display = "block";
 
-  if (GOOGLE_SHEET_WEBAPP_URL !== "https://script.google.com/macros/s/AKfycbw7VcWvUFrfBmwqDiJp9_bny-lrBUeUYA8ABTdWACXAgyS3R2Hs4T_GkcROFx0AKlAfxQ/exec") {
+  if (GOOGLE_SHEET_WEBAPP_URL !== "") {
     try {
       await fetch(GOOGLE_SHEET_WEBAPP_URL, {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
         body: JSON.stringify(payload)
       });
     } catch (err) {
@@ -570,31 +644,55 @@ quizForm.addEventListener("submit", async function(e) {
     }
   }
 
-  // Lock out today's attempt
   localStorage.setItem(DAILY_STORAGE_KEY, "true");
 
   loadingIndicator.style.display = "none";
   quizForm.style.display = "none";
+  
+  showScoreCardFinal(nameVal, phoneVal, emailVal, correctCount, wrongCount, penalty, finalScore, unattemptedCount, percentage);
+});
+
+function showScoreCardFinal(name, phone, email, correct, wrong, penalty, finalScore, unattempted, percentage) {
   scoreCard.style.display = "block";
 
   document.getElementById("card-date-line").innerText = `चाचणी दिनांक: ${formattedMarathiDate}`;
   document.getElementById("card-student-details").innerHTML = `
-    <div><strong>विद्यार्थ्याचे नाव:</strong> ${nameVal}</div>
-    <div><strong>मोबाईल:</strong> ${phoneVal}</div>
-    <div><strong>ईमेल:</strong> ${emailVal}</div>
+    <div><strong>विद्यार्थ्याचे नाव:</strong> ${name}</div>
+    <div><strong>मोबाईल:</strong> ${phone}</div>
+    <div><strong>ईमेल:</strong> ${email}</div>
     <div><strong>दिनांक:</strong> ${formattedMarathiDate}</div>
   `;
 
   document.getElementById("res-total").innerText = dailyQuizBank.length;
-  document.getElementById("res-correct").innerText = `${correctCount} (+${correctCount} गुण)`;
-  document.getElementById("res-wrong").innerText = `${wrongCount}`;
+  document.getElementById("res-correct").innerText = `${correct} (+${correct} गुण)`;
+  document.getElementById("res-wrong").innerText = `${wrong}`;
   document.getElementById("res-penalty").innerText = `-${penalty.toFixed(2)} गुण`;
-  document.getElementById("res-unattempted").innerText = unattemptedCount;
+  document.getElementById("res-unattempted").innerText = unattempted;
   document.getElementById("res-final-score").innerText = `${finalScore.toFixed(2)} / ${dailyQuizBank.length}`;
   document.getElementById("res-percentage").innerText = `टक्केवारी: ${percentage}%`;
 
+  if (DAILY_YOUTUBE_URL && DAILY_YOUTUBE_URL.trim() !== "") {
+    const videoContainer = document.getElementById("solution-video-container");
+    const videoLink = document.getElementById("youtube-link");
+    const videoEmbed = document.getElementById("youtube-embed");
+    
+    videoContainer.style.display = "block";
+    videoLink.href = DAILY_YOUTUBE_URL;
+
+    let videoId = "";
+    if (DAILY_YOUTUBE_URL.includes("watch?v=")) {
+      videoId = DAILY_YOUTUBE_URL.split("watch?v=")[1].split("&")[0];
+    } else if (DAILY_YOUTUBE_URL.includes("youtu.be/")) {
+      videoId = DAILY_YOUTUBE_URL.split("youtu.be/")[1].split("?")[0];
+    }
+
+    if (videoId) {
+      videoEmbed.innerHTML = `<iframe width="100%" height="315" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="border-radius: 8px; margin-top:10px;"></iframe>`;
+    }
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+}
 </script>
 
 </body>
